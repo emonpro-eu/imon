@@ -3,7 +3,7 @@
 export NCURSES_NO_UTF8_ACS=1
 
 INSTALL_DIR="/etc/emonpro/imon"
-SERVICE_FILE="imon-iscsi.service"
+SERVICE_FILE="imon-iscsi-monitor.service"
 MONITOR_SCRIPT="imon-iscsi-monitor.sh"
 GUI_CONFIG_SCRIPT="imon-gui-config.sh"
 
