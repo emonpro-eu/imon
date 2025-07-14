@@ -51,8 +51,8 @@ sudo bash "$INSTALL_DIR/$GUI_CONFIG_SCRIPT"
 
 # 6. Activează și pornește serviciul
 sudo systemctl daemon-reload
-sudo systemctl enable imon-iscsi.service
-sudo systemctl restart imon-iscsi.service
+sudo systemctl enable imon-iscsi-monitor.service
+sudo systemctl restart imon-iscsi-monitor.service
 
 # 7. Afișează status scurt
 SERVICE_STATUS=$(systemctl is-active imon-iscsi-monitor.service)
