@@ -2,7 +2,7 @@
 
 export NCURSES_NO_UTF8_ACS=1  # pentru caractere clare în dialog
 
-SCRIPT="/usr/local/bin/imon-iscsi.sh"
+SCRIPT="/etc/emonpro/imon/imon-iscsi-monitor.sh"
 
 # Verifică dacă scriptul există
 if [[ ! -f "$SCRIPT" ]]; then
