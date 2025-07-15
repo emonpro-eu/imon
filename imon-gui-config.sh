@@ -51,5 +51,5 @@ dialog --title "Done" --msgbox "✅ Configuration saved:\n\nTarget: $TARGET\nMou
 clear
 sudo systemctl daemon-reexec
 sudo systemctl daemon-reload
-sudo systemctl enable --now imon-iscsi.service
+sudo systemctl enable --now imon-iscsi-monitor.service
 clear
