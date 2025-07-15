@@ -1,10 +1,10 @@
 #!/bin/bash
 #/usr/local/bin/imon-iscsi.sh
 
-EMAIL="adresa_ta_email@domeniu.com"
-LOGFILE="/var/log/imon-iscsi.log"
-TARGETS=("iqn.2004-04.com.qnap:ts-451plus:iscsi.target-0.imm-top")
-MOUNTS=("/mnt/veeam/")
+EMAIL="email@domain.com"
+LOGFILE="/var/log/imon-iscsi-monitor.log"
+TARGETS=("iqn.TARGET")
+MOUNTS=("/mnt/{mount point}/")
 MIN_SIZE=900
 
 check_target() {
@@ -31,24 +31,24 @@ while true; do
         MOUNT="${MOUNTS[$i]}"
 
         if ! check_target "$TARGET"; then
-            echo "$(date) - ALERT: $TARGET nu este conectat. Se încearcă reconectare..." | tee -a "$LOGFILE"
+            echo "$(date) - ALERT: $TARGET is not connected. Trying to reconnect..." | tee -a "$LOGFILE"
             iscsiadm -m node -T "$TARGET" --login
             sleep 3
         fi
 
         if ! check_mount_valid "$MOUNT"; then
-            echo "$(date) - ALERT: $MOUNT inaccesibil sau sub ${MIN_SIZE}GB. Se remontează..." | tee -a "$LOGFILE"
+            echo "$(date) - ALERT: $MOUNT inaccessible or under ${MIN_SIZE}GB. Reconnecting..." | tee -a "$LOGFILE"
             umount -f "$MOUNT"
             sleep 2
             mount "$MOUNT"
 
             if ! check_mount_valid "$MOUNT"; then
-                echo "$(date) - EROARE: Remount eșuat la $MOUNT" | tee -a "$LOGFILE" | msmtp "$EMAIL"
+                echo "$(date) - ERROR: Reconnection failed at $MOUNT" | tee -a "$LOGFILE" | msmtp "$EMAIL"
             else
-                echo "$(date) - $MOUNT montat cu succes după reconectare." | tee -a "$LOGFILE"
+                echo "$(date) - $MOUNT mounted successfully after reconnecting." | tee -a "$LOGFILE"
             fi
         else
-            echo "$(date) - OK: $MOUNT este montat corect." >> "$LOGFILE"
+            echo "$(date) - OK: $MOUNT is mounted correctly." >> "$LOGFILE"
         fi
     done
     sleep 10
