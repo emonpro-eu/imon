@@ -56,6 +56,6 @@ sudo systemctl restart imon-iscsi-monitor.service
 
 # 7. Afișează status scurt
 SERVICE_STATUS=$(systemctl is-active imon-iscsi-monitor.service)
-
+sleep 5
 dialog --title "Service Status" --msgbox "imon-iscsi-monitor.service is: $SERVICE_STATUS" 8 40
 clear
