@@ -7,16 +7,16 @@ SERVICE_FILE="imon-iscsi-monitor.service"
 MONITOR_SCRIPT="imon-iscsi-monitor.sh"
 GUI_CONFIG_SCRIPT="imon-gui-config.sh"
 
-# Asigură-te că dialog este instalat
+# Make sure the dialog package is installed
 if ! command -v dialog &> /dev/null; then
     echo "Installing 'dialog'..."
     sudo apt update && sudo apt install -y dialog
 fi
 
-# 1. Crează directorul
+# 1. Create the installation directory
 sudo mkdir -p "$INSTALL_DIR"
 
-# 2. Copiază și setează permisiuni pentru monitor script
+# 2. Copy and set permissions for monitor script
 if [[ -f "$MONITOR_SCRIPT" ]]; then
     sudo cp "$MONITOR_SCRIPT" "$INSTALL_DIR/"
     sudo chmod +x "$INSTALL_DIR/$MONITOR_SCRIPT"
@@ -25,7 +25,7 @@ else
     exit 1
 fi
 
-# 3. Copiază și setează permisiuni pentru GUI config script
+# 3. Copy and set permissions for GUI config script
 if [[ -f "$GUI_CONFIG_SCRIPT" ]]; then
     sudo cp "$GUI_CONFIG_SCRIPT" "$INSTALL_DIR/"
     sudo chmod +x "$INSTALL_DIR/$GUI_CONFIG_SCRIPT"
@@ -34,11 +34,11 @@ else
     exit 1
 fi
 
-# Setează permisiuni stricte pentru folder și fișiere
+# Set strict folder and file permissions
 sudo chown root:root "$INSTALL_DIR"/*
 sudo chmod 750 "$INSTALL_DIR"/*
 
-# 4. Copiază serviciul
+# 4. Copy the service
 if [[ -f "$SERVICE_FILE" ]]; then
     sudo cp "$SERVICE_FILE" /etc/systemd/system/
 else
@@ -46,15 +46,15 @@ else
     exit 1
 fi
 
-# 5. Rulează configuratorul grafic
+# 5. Run the graphical configurator
 sudo bash "$INSTALL_DIR/$GUI_CONFIG_SCRIPT"
 
-# 6. Activează și pornește serviciul
+# 6. Activate and start the service
 sudo systemctl daemon-reload
 sudo systemctl enable imon-iscsi-monitor.service
 sudo systemctl restart imon-iscsi-monitor.service
 
-# 7. Afișează status scurt
+# 7. Show service status
 SERVICE_STATUS=$(systemctl is-active imon-iscsi-monitor.service)
 sleep 5
 dialog --title "Service Status" --msgbox "imon-iscsi-monitor.service is: $SERVICE_STATUS" 8 40
