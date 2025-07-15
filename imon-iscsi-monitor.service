@@ -4,7 +4,7 @@ After=network-online.target
 Wants=network-online.target
 
 [Service]
-ExecStart=/etc/emonpro/imon/imon-iscsi.sh
+ExecStart=/etc/emonpro/imon/imon-iscsi-monitor.sh
 Restart=always
 RestartSec=5
 User=root
