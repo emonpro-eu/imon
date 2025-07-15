@@ -1,4 +1,4 @@
-# iMON-iSCSI ![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
+# iMON-iSCSI Monitor ![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
 
 iMON-iSCSI is a bash-based iSCSI monitor and remount daemon for Linux.
 
